@@ -1,4 +1,12 @@
-const audioMeo = new Audio('./resource/meomeomeo.wav');
+// read `model` from query string: e.g. ?model=jackienjine
+function getQueryParam(name) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(name);
+}
+
+const resourceFolder = (getQueryParam('model') || '').toLowerCase() === 'jackienjine' ? 'jackienjine' : 'tranducbo';
+
+const audioMeo = new Audio(`./resource/${resourceFolder}/sound.wav`);
 const audioOhno = new Audio('./resource/ohnoshort.wav');
 
 function setHeightTamche() {
@@ -7,6 +15,17 @@ function setHeightTamche() {
 
 $(window).on('load', setHeightTamche)
 $(window).resize(setHeightTamche)
+
+// ensure model image is loaded from the correct resource folder
+$(window).on('load', function () {
+    $('.model .image').attr('src', `./resource/${resourceFolder}/image.png`);
+    // add a class for model-specific styling (e.g., move left for jackienjine)
+    if (resourceFolder === 'jackienjine') {
+        $('.model').addClass('jackienjine');
+    } else {
+        $('.model').removeClass('jackienjine');
+    }
+});
 
 function pauseAudio(audio) {
     audio.pause()
@@ -36,7 +55,7 @@ present.click(async function () {
     audioMeo.play()
 
     let nap = $("#nap");
-    let tranDucBo = $('.tran-duc-bo');
+    let model = $('.model');
     let background = $('.background')
     let tamche = $('.tam-che');
     let clickhere = $('.clickhere')
@@ -47,16 +66,16 @@ present.click(async function () {
     tamche.addClass('shake run')
     items.addClass('appear')
 
-    tranDucBo.addClass("appear");
+    model.addClass("appear");
     await sleep(10)
     nap.addClass("present-rotate")
-    tranDucBo.addClass("move")
+    model.addClass("move")
 
     await sleep(audioMeo.duration * 1000)
 
     background.removeClass('shake run')
     tamche.removeClass('shake run')
-    tranDucBo.removeClass("move")
+    model.removeClass("move")
     nap.removeClass("present-rotate")
     items.removeClass('appear')
 });

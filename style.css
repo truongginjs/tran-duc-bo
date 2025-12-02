@@ -103,7 +103,7 @@
     }
 }
 
-.tran-duc-bo {
+.model {
     margin-left: 2rem;
     position: absolute;
     top: 50%;
@@ -111,6 +111,11 @@
     transition: all 1200ms linear;
     overflow: hidden;
     display: none;
+}
+
+/* When the jackienjine model is selected, nudge it slightly left */
+.model.jackienjine {
+    margin-left: 1rem; /* move a little bit to the left */
 }
 
 .image {
