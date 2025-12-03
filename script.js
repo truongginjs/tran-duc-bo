@@ -4,7 +4,8 @@ function getQueryParam(name) {
     return params.get(name);
 }
 
-const resourceFolder = (getQueryParam('model') || '').toLowerCase() === 'jackienjine' ? 'jackienjine' : 'tranducbo';
+const modelParam = (getQueryParam('model') || '').toLowerCase();
+const resourceFolder = modelParam === 'jackienjine' ? 'jackienjine' : modelParam === 'minhbeo' ? 'minhbeo' : 'tranducbo';
 
 const audioMeo = new Audio(`./resource/${resourceFolder}/sound.wav`);
 const audioOhno = new Audio('./resource/ohnoshort.wav');
@@ -19,11 +20,15 @@ $(window).resize(setHeightTamche)
 // ensure model image is loaded from the correct resource folder
 $(window).on('load', function () {
     $('.model .image').attr('src', `./resource/${resourceFolder}/image.png`);
-    // add a class for model-specific styling (e.g., move left for jackienjine)
+    // add classes for model-specific styling
     if (resourceFolder === 'jackienjine') {
         $('.model').addClass('jackienjine');
-    } else {
+        $('.model').removeClass('minhbeo');
+    } else if (resourceFolder === 'minhbeo') {
+        $('.model').addClass('minhbeo');
         $('.model').removeClass('jackienjine');
+    } else {
+        $('.model').removeClass('jackienjine minhbeo');
     }
 });
 
