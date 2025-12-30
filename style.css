@@ -111,6 +111,7 @@
     transition: all 1200ms linear;
     overflow: hidden;
     display: none;
+    
 }
 
 /* When the jackienjine model is selected, nudge it slightly left */

@@ -5,7 +5,16 @@ function getQueryParam(name) {
 }
 
 const modelParam = (getQueryParam('model') || '').toLowerCase();
-const resourceFolder = modelParam === 'jackienjine' ? 'jackienjine' : modelParam === 'minhbeo' ? 'minhbeo' : 'tranducbo';
+let resourceFolder;
+if (modelParam === 'jackienjine') {
+    resourceFolder = 'jackienjine';
+} else if (modelParam === 'minhbeo') {
+    resourceFolder = 'minhbeo';
+} else if (modelParam === 'bebo') {
+    resourceFolder = 'bebo';
+} else {
+    resourceFolder = 'tranducbo';
+}
 
 const audioMeo = new Audio(`./resource/${resourceFolder}/sound.wav`);
 const audioOhno = new Audio('./resource/ohnoshort.wav');
@@ -23,12 +32,15 @@ $(window).on('load', function () {
     // add classes for model-specific styling
     if (resourceFolder === 'jackienjine') {
         $('.model').addClass('jackienjine');
-        $('.model').removeClass('minhbeo');
+        $('.model').removeClass('minhbeo bebo');
     } else if (resourceFolder === 'minhbeo') {
         $('.model').addClass('minhbeo');
-        $('.model').removeClass('jackienjine');
-    } else {
+        $('.model').removeClass('jackienjine bebo');
+    } else if (resourceFolder === 'bebo') {
+        $('.model').addClass('bebo');
         $('.model').removeClass('jackienjine minhbeo');
+    } else {
+        $('.model').removeClass('jackienjine minhbeo bebo');
     }
 });
 
